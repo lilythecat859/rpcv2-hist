@@ -1,4 +1,4 @@
-module github.com/faithful-rpc/rpcv2-hist
+module github.com/lilythecat859/rpcv2-hist
 
 go 1.22
 
