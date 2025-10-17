@@ -32,11 +32,14 @@ RPCV2_LOGLEVEL
 RPCV2_JSONRPCListen
 
 , etc.
+
 Production
+
 Set
 TTL toDateTime(block_time) + INTERVAL 30 DAY TO VOLUME 'cold'
 
 in ClickHouse
+
 Use
 tool-parquet
 
@@ -45,5 +48,6 @@ Scale fractal shards by duplicating
 internal/fractal/root.go
 
 shard map
+
 License
 AGPL-3.0 – commercial licenses available.
