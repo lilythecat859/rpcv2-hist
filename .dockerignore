@@ -1,0 +1,9 @@
+# AGPL-3.0
+.git
+.github
+*.md
+Dockerfile
+docker-compose.yml
+bin/
+*.test
+*.out
