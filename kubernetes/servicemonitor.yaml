@@ -1,0 +1,14 @@
+# AGPL-3.0
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: rpcv2-hist
+  namespace: rpcv2-hist
+spec:
+  selector:
+    matchLabels:
+      app: rpcv2-hist
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
