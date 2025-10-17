@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package rpcv2.hist.v1;
+
+option go_package = "github.com/faithful-rpc/rpcv2-hist/internal/api/grpc;grpc";
+
+service Historical {
+  rpc GetBlock(GetBlockRequest) returns (GetBlockResponse) {}
+  rpc GetTransaction(GetTransactionRequest) returns (GetTransactionResponse) {}
+  rpc GetSignaturesForAddress(GetSignaturesForAddressRequest) returns (GetSignaturesForAddressResponse) {}
+  rpc GetBlocksWithLimit(GetBlocksWithLimitRequest) returns (GetBlocksWithLimitResponse) {}
+  rpc GetBlockTime(GetBlockTimeRequest) returns (GetBlockTimeResponse) {}
+}
+
+message GetBlockRequest {
+  uint64 slot = 1;
+  string commitment = 2;
+}
+
+message GetBlockResponse {
+  bytes raw = 1; // json compressed
+}
+
+message GetTransactionRequest {
+  string signature = 1;
+  string commitment = 2;
+}
+
+message GetTransactionResponse {
+  bytes raw = 1;
+}
+
+message GetSignaturesForAddressRequest {
+  string address = 1;
+  uint64 limit = 2;
+  string before = 3;
+  string until = 4;
+  string commitment = 5;
+}
+
+message SigInfo {
+  string signature = 1;
+  uint64 slot = 2;
+  string err = 3;
+  string memo = 4;
+  int64 block_time = 5;
+}
+
+message GetSignaturesForAddressResponse { repeated SigInfo signatures = 1; }
+
+message GetBlocksWithLimitRequest {
+  uint64 start_slot = 1;
+  uint64 limit = 2;
+  string commitment = 3;
+}
+
+message GetBlocksWithLimitResponse { repeated uint64 slots = 1; }
+
+message GetBlockTimeRequest { uint64 slot = 1; }
+
+message GetBlockTimeResponse { int64 block_time = 1; }
