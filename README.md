@@ -16,12 +16,13 @@ docker compose up -d          # ClickHouse + service
 curl http://localhost:8899 -X POST -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":1,"method":"getBlock","params":[42]}'
 
-# Benchmarks (AMD EPYC 9274F, 256 GB)
+Benchmarks (AMD EPYC 9274F, 256 GB)
 Method	P99 latency	RPS
 getSignaturesForAddress (2 T rows)	82 ms	12 k
 getBlock	3 ms	50 k
 getTransaction	4 ms	45 k
-Env vars
+
+## Env vars
 RPCV2_CLICKHOUSE_ADDR
 
 ,
