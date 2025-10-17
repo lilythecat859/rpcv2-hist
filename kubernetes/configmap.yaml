@@ -1,0 +1,13 @@
+# AGPL-3.0
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rpcv2-hist-config
+  namespace: rpcv2-hist
+data:
+  RPCV2_LOGLEVEL: "info"
+  RPCV2_JSONRPCListen: "0.0.0.0:8899"
+  RPCV2_RESTListen: "0.0.0.0:8080"
+  RPCV2_GRPCListen: "0.0.0.0:9090"
+  RPCV2_CLICKHOUSE_ADDR: "clickhouse-clickhouse:9000"
+  RPCV2_CLICKHOUSE_DATABASE: "solana"
