@@ -86,3 +86,40 @@ func (i *Ingester) loop() {
 		}
 	}
 }
+
+func (i *Ingester) EnqueueBlock(block *model.Block) {
+	i.queue <- &batch{blocks: []model.Block{*block}}
+}
+
+func (i *Ingester) flush(b *batch) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	return i.storeBulk(ctx, b)
+}
+
+func (i *Ingester) storeBulk(ctx context.Context, b *batch) error {
+	pool := memory.NewGoAllocator()
+	defer pool.AssertSize(0)
+
+	const maxRows = 1 << 20
+	bldBlocks := array.NewStructBuilder(pool, arrow.StructOf(
+		arrow.Field{Name: "slot", Type: arrow.PrimitiveTypes.Uint64},
+		arrow.Field{Name: "blockhash", Type: arrow.BinaryTypes.String},
+		arrow.Field{Name: "parent_slot", Type: arrow.PrimitiveTypes.Uint64},
+		arrow.Field{Name: "block_time", Type: arrow.PrimitiveTypes.Int64},
+		arrow.Field{Name: "height", Type: arrow.PrimitiveTypes.Uint64},
+		arrow.Field{Name: "raw", Type: arrow.BinaryTypes.Binary},
+	))
+	defer bldBlocks.Release()
+
+	for _, blk := range b.blocks {
+		bldBlocks.Append(true)
+		bldBlocks.FieldBuilder(0).(*array.Uint64Builder).Append(blk.Slot)
+		bldBlocks.FieldBuilder(1).(*array.StringBuilder).Append(blk.Blockhash)
+		bldBlocks.FieldBuilder(2).(*array.Uint64Builder).Append(blk.ParentSlot)
+		bldBlocks.FieldBuilder(3).(*array.Int64Builder).Append(blk.BlockTime)
+		bldBlocks.FieldBuilder(4).(*array.Uint64Builder).Append(blk.Height)
+		bldBlocks.FieldBuilder(5).(*array.BinaryBuilder).Append(blk.Raw)
+	}
+	return nil
+}
