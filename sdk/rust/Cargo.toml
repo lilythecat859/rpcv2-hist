@@ -1,0 +1,17 @@
+[
+package
+]
+name = "rpcv2-hist-sdk"
+version = "0.1.0"
+authors = ["Faithful RPC <hello@faithful-rpc.org>"]
+license = "AGPL-3.0"
+edition = "2021"
+description = "Rust SDK for rpcv2-hist"
+
+[
+dependencies
+]
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+thiserror = "1"
