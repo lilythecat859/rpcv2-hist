@@ -1,0 +1,32 @@
+# AGPL-3.0
+run:
+  timeout: 5m
+  tests: true
+linters:
+  enable:
+    - gofmt
+    - goimports
+    - govet
+    - errcheck
+    - staticcheck
+    - ineffassign
+    - typecheck
+    - unused
+    - gosimple
+    - prealloc
+    - goconst
+    - gocritic
+    - gocyclo
+    - bodyclose
+    - noctx
+    - revive
+    - misspell
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+issues:
+  exclude-use-default: false
+  max-same-issues: 0
