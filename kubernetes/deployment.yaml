@@ -1,0 +1,50 @@
+# AGPL-3.0
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rpcv2-hist
+  namespace: rpcv2-hist
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rpcv2-hist
+  template:
+    metadata:
+      labels:
+        app: rpcv2-hist
+    spec:
+      containers:
+        - name: hist
+          image: ghcr.io/faithful-rpc/rpcv2-hist:0.1.0
+          ports:
+            - containerPort: 8899
+              name: jsonrpc
+            - containerPort: 8080
+              name: rest
+            - containerPort: 9090
+              name: grpc
+            - containerPort: 9091
+              name: metrics
+          envFrom:
+            - configMapRef:
+                name: rpcv2-hist-config
+          resources:
+            requests:
+              cpu: "14"
+              memory: "240Gi"
+            limits:
+              cpu: "16"
+              memory: "256Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
