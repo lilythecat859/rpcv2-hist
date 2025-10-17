@@ -1,0 +1,35 @@
+// AGPL-3.0
+import http from 'k6/http';
+import { check } from 'k6';
+
+export let options = {
+  stages: [
+    { duration: '30s', target: 1000 },
+    { duration: '1m', target: 5000 },
+    { duration: '30s', target: 0 },
+  ],
+  thresholds: {
+    http_req_duration: ['p(99)<100'], // 99% under 100ms
+  },
+};
+
+const url = __ENV.URL || 'http://localhost:8899';
+
+export default function () {
+  const payload = JSON.stringify({
+    jsonrpc: '2.0',
+    id: __ITER,
+    method: 'getBlock',
+    params: [Math.floor(Math.random() * 200000000)],
+  });
+  const params = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = http.post(url, payload, params);
+  check(res, {
+    'status is 200': (r) => r.status === 200,
+    'has result': (r) => JSON.parse(r.body).result !== null,
+  });
+}
