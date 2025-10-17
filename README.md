@@ -36,11 +36,13 @@ RPCV2_JSONRPCListen
 Production
 
 Set
+
 TTL toDateTime(block_time) + INTERVAL 30 DAY TO VOLUME 'cold'
 
 in ClickHouse
 
 Use
+
 tool-parquet
 
 to offload partitions to S3 after TTL
