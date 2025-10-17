@@ -14,13 +14,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/lilythecat859/rpcv2-hist/internal/api/jsonrpc"
-	"github.com/lilythecat859/rpcv2-hist/internal/api/rest"
-	"github.com/lilythecat859/rpcv2-hist/internal/config"
-	"github.com/lilythecat859/rpcv2-hist/internal/fractal"
-	"github.com/lilythecat859/rpcv2-hist/internal/ingest"
-	"github.com/lilythecat859/rpcv2-hist/internal/storage/clickhouse"
-	"github.com/lilythecat859/rpcv2-hist/internal/telemetry"
+	"github.com/faithful-rpc/rpcv2-hist/internal/api/jsonrpc"
+	"github.com/faithful-rpc/rpcv2-hist/internal/api/rest"
+	"github.com/faithful-rpc/rpcv2-hist/internal/config"
+	"github.com/faithful-rpc/rpcv2-hist/internal/fractal"
+	"github.com/faithful-rpc/rpcv2-hist/internal/ingest"
+	"github.com/faithful-rpc/rpcv2-hist/internal/storage/clickhouse"
+	"github.com/faithful-rpc/rpcv2-hist/internal/telemetry"
 	"github.com/oklog/run"
 	"go.opentelemetry.io/otel"
 	"go.uber.org/zap"
@@ -43,45 +43,78 @@ func runMain() error {
 		return fmt.Errorf("load config: %w", err)
 	}
 
-	logger, err := telemetry.NewLogger(cfg.LogLevel)
-	if err != nil {
-		return fmt.Errorf("new logger: %w", err)
-	}
-	defer func() { _ = logger.Sync() }()
+fractalRoot := fractal.NewRoot(db, logger)
 
-	tp, err := telemetry.NewTraceProvider(ctx, cfg)
-	if err != nil {
-		return fmt.Errorf("new trace provider: %w", err)
+	var g run.Group
+	// JSON-RPC server
+	{
+		rpcSrv := jsonrpc.NewServer(fractalRoot, logger)
+		mux := http.NewServeMux()
+		mux.Handle("/", rpcSrv)
+		srv := &http.Server{
+			Addr:    cfg.JSONRPCListen,
+			Handler: telemetry.HTTPMiddleware(mux),
+		}
+		g.Add(func() error {
+			logger.Info("starting json-rpc", zap.String("addr", cfg.JSONRPCListen))
+			return srv.ListenAndServe()
+		}, func(err error) {
+			shutdownCtx, done := context.WithTimeout(context.Background(), 5*time.Second)
+			_ = srv.Shutdown(shutdownCtx)
+			done()
+		})
 	}
-	defer func() { _ = tp.Shutdown(ctx) }()
-	otel.SetTracerProvider(tp)
-
-	mp := telemetry.NewMetricProvider(cfg)
-	defer func() { _ = mp.Shutdown(ctx) }()
-
-	db, err := clickhouse.New(ctx, cfg.ClickHouse, clickhouse.WithLogger(logger))
-	if err != nil {
-		return fmt.Errorf("open clickhouse: %w", err)
+	// REST gateway
+	{
+		restSrv := rest.NewServer(fractalRoot, logger)
+		srv := &http.Server{
+			Addr:    cfg.RESTListen,
+			Handler: telemetry.HTTPMiddleware(restSrv),
+		}
+		g.Add(func() error {
+			logger.Info("starting rest", zap.String("addr", cfg.RESTListen))
+			return srv.ListenAndServe()
+		}, func(err error) {
+			shutdownCtx, done := context.WithTimeout(context.Background(), 5*time.Second)
+			_ = srv.Shutdown(shutdownCtx)
+			done()
+		})
 	}
-	defer func() { _ = db.Close() }()
-
-	ing, err := ingest.New(db, ingest.WithLogger(logger))
-	if err != nil {
-		return fmt.Errorf("new ingest: %w", err)
+	// gRPC server
+	{
+		ln, err := net.Listen("tcp", cfg.GRPCListen)
+		if err != nil {
+			return fmt.Errorf("grpc listen: %w", err)
+		}
+		srv := grpc.NewServer(
+			grpc.UnaryInterceptor(otelgrpc.UnaryServerInterceptor()),
+			grpc.StreamInterceptor(otelgrpc.StreamServerInterceptor()),
+		)
+		// register services here
+		g.Add(func() error {
+			logger.Info("starting grpc", zap.String("addr", cfg.GRPCListen))
+			return srv.Serve(ln)
+		}, func(err error) {
+			srv.GracefulStop()
+		})
 	}
-  
-	github.com/spf13/cobra v1.8.0
-	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.9.0
-	github.com/tidwall/gjson v1.17.0
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
-	go.opentelemetry.io/otel v1.25.0
-	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.25.0
-	go.opentelemetry.io/otel/sdk v1.25.0
-	go.uber.org/zap v1.27.0
-	golang.org/x/sync v0.7.0
-	google.golang.org/grpc v1.63.2
-	google.golang.org/protobuf v1.33.0
-	gopkg.in/yaml.v3 v3.0.1
-)
+	// Ingester
+	{
+		g.Add(func() error {
+			return ing.Run(ctx)
+		}, func(err error) {
+			cancel()
+		})
+	}
+	// Signal handler
+	{
+		g.Add(func() error {
+			<-ctx.Done()
+			return errors.New("terminated")
+		}, func(err error) {
+			cancel()
+		})
+	}
+
+	return g.Run()
+}
