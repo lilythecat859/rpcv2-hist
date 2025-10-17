@@ -45,7 +45,7 @@ spec:
     metadata:
       labels:
         app: otel-collector0
-spec:
+    spec:
       containers:
         - name: collector
           image: otel/opentelemetry-collector-contrib:0.99.0
