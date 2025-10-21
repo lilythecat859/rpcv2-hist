@@ -6,17 +6,17 @@ CGO_ENABLED=0 make build
 ./bin/rpcv2-hist
 ```
 
-##Docker
+Docker
 ```
 docker compose up -d
 ```
 
-##Kubernetes
+Kubernetes
 ```
 kubectl apply -f kubernetes/
 ```
 
-##Terraform
+Terraform
 
 See
 ```
