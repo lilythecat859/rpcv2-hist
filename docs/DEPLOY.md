@@ -1,22 +1,22 @@
 # Deploy
 
-Binary
+##Binary
 ```bash
 CGO_ENABLED=0 make build
 ./bin/rpcv2-hist
 ```
 
-Docker
+##Docker
 ```
 docker compose up -d
 ```
 
-Kubernetes
+##Kubernetes
 ```
 kubectl apply -f kubernetes/
 ```
 
-Terraform
+##Terraform
 
 See
 ```
@@ -25,21 +25,26 @@ terraform/
 
 (community maintained).
 
-Helm
-```helm install rpcv2-hist ./helm
+##Helm
+```
+helm install rpcv2-hist ./helm
+```
 
 
-Migration from BigTable
-```go run scripts/migrate-from-bigtable.go \
+##Migration from BigTable
+```
+go run scripts/migrate-from-bigtable.go \
   -bt-project my-gcp-proj \
   -bt-instance solana \
   -bt-table mainnet \
   -ch-addr clickhouse:9000
+```
 
-Tuning
+##Tuning
 
 Run
-
-```scripts/clickhouse-tuning.sh
+```
+scripts/clickhouse-tuning.sh
+```
 
 on each ClickHouse node.
