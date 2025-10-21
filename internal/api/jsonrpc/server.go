@@ -13,9 +13,9 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/fractal"
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage"
+	"github.com/lilythecat859/rpcv2-hist/internal/fractal"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage"
 )
 
 const (
