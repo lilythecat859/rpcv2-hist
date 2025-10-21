@@ -10,7 +10,7 @@
 CGO_ENABLED=0 make build
 ```
 
-Cross-compile
+## Cross-compile
 ```
 GOOS=linux GOARCH=arm64 make build
 ```
