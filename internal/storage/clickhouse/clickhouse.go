@@ -9,8 +9,8 @@ import (
 	"github.com/ClickHouse/clickhouse-go/v2/lib/driver"
 	"go.uber.org/zap"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage"
 )
 
 type DB struct {
