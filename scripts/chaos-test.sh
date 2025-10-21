@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 # AGPL-3.0
 set -euo pipefail
