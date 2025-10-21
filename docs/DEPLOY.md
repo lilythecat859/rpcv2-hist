@@ -1,22 +1,22 @@
 # Deploy
 
-##Binary
+Binary
 ```bash
 CGO_ENABLED=0 make build
 ./bin/rpcv2-hist
 ```
 
-##Docker
+Docker
 ```
 docker compose up -d
 ```
 
-##Kubernetes
+Kubernetes
 ```
 kubectl apply -f kubernetes/
 ```
 
-##Terraform
+Terraform
 
 See
 ```
@@ -25,13 +25,13 @@ terraform/
 
 (community maintained).
 
-##Helm
+Helm
 ```
 helm install rpcv2-hist ./helm
 ```
 
 
-##Migration from BigTable
+Migration from BigTable
 ```
 go run scripts/migrate-from-bigtable.go \
   -bt-project my-gcp-proj \
@@ -40,7 +40,7 @@ go run scripts/migrate-from-bigtable.go \
   -ch-addr clickhouse:9000
 ```
 
-##Tuning
+Tuning
 
 Run
 ```
