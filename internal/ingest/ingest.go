@@ -13,8 +13,8 @@ import (
 	"github.com/apache/arrow/go/v15/arrow/memory"
 	"go.uber.org/zap"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage"
 )
 
 type Ingester struct {
