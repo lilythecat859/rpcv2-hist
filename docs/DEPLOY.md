@@ -25,17 +25,18 @@ terraform/
 
 (community maintained).
 
-##Helm
+Helm
 ```helm install rpcv2-hist ./helm
 
-##Migration from BigTable
+
+Migration from BigTable
 ```go run scripts/migrate-from-bigtable.go \
   -bt-project my-gcp-proj \
   -bt-instance solana \
   -bt-table mainnet \
   -ch-addr clickhouse:9000
 
-##Tuning
+Tuning
 
 Run
 
