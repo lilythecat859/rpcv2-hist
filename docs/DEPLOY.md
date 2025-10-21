@@ -23,7 +23,7 @@ See
 terraform/
 ```
 
-(community maintained).
+(community maintained)
 
 Helm
 ```
