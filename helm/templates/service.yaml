@@ -1,0 +1,16 @@
+# AGPL-3.0
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rpcv2-hist.fullname" . }}
+  labels:
+    {{- include "rpcv2-hist.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: jsonrpc
+      protocol: TCP
+      name: jsonrpc
+  selector:
+    {{- include "rpcv2-hist.selectorLabels" . | nindent 4 }}
