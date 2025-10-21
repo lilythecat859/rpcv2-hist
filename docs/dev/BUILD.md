@@ -15,22 +15,22 @@ CGO_ENABLED=0 make build
 GOOS=linux GOARCH=arm64 make build
 ```
 
-Docker image
+## Docker image
 ```
 make image
 ```
 
-Generate protos
+## Generate protos
 ```
 buf generate
 ```
 
-Run tests
+## Run tests
 ```
 make test
 ```
 
-Run benches
+## Run benches
 ```
 make bench
 ```
