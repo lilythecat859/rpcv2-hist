@@ -14,6 +14,9 @@ Run `scripts/clickhouse-tuning.sh`.
 ## Benchmark
 ```bash
 go test -bench=. -benchmem ./...
+```
 
 Profile
+```
 scripts/bench-pprof.sh
+```
