@@ -1,0 +1,42 @@
+# AGPL-3.0
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rpcv2-hist.fullname" . }}
+  labels:
+    {{- include "rpcv2-hist.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rpcv2-hist.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "rpcv2-hist.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: jsonrpc
+              containerPort: 8899
+            - name: rest
+              containerPort: 8080
+            - name: grpc
+              containerPort: 9090
+            - name: metrics
+              containerPort: 9091
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
