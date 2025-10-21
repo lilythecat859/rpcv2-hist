@@ -1,0 +1,30 @@
+# AGPL-3.0
+replicaCount: 3
+image:
+  repository: ghcr.io/faithful-rpc/rpcv2-hist
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8899
+
+resources:
+  limits:
+    cpu: 16
+    memory: 256Gi
+  requests:
+    cpu: 14
+    memory: 240Gi
+
+nodeSelector:
+  cloud.google.com/machine-family: "n2d"
+
+tolerations: []
+
+affinity: {}
+
+env:
+  RPCV2_LOGLEVEL: info
+  RPCV2_CLICKHOUSE_ADDR: "clickhouse-clickhouse:9000"
+  RPCV2_CLICKHOUSE_DATABASE: solana
