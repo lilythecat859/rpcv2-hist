@@ -14,6 +14,7 @@ Add to `monitoring/alerts.yaml`:
 ```yaml
 - alert: HighLatency
   expr: histogram_quantile(0.99, rpcv2_hist_request_duration_seconds) > 0.2
+```
 
 # Dashboards
 Embed in
