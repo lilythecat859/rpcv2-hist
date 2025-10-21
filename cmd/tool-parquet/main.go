@@ -14,7 +14,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/parquet"
+	"github.com/lilythecat859/rpcv2-hist/internal/parquet"
 )
 
 var (
