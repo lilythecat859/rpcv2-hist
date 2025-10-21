@@ -16,7 +16,7 @@ Run `scripts/clickhouse-tuning.sh`.
 go test -bench=. -benchmem ./...
 ```
 
-Profile
+# Profile
 ```
 scripts/bench-pprof.sh
 ```
