@@ -1,0 +1,7 @@
+# AGPL-3.0
+apiVersion: v2
+name: rpcv2-hist
+description: Helm chart for rpcv2-hist
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
