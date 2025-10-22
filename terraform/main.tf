@@ -56,7 +56,7 @@ network_interface {
     usermod -aG docker ubuntu
     curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
-    git clone https://github.com/faithful-rpc/rpcv2-hist /opt/rpcv2-hist
+    git clone https://github.com/lilythecat859/rpcv2-hist /opt/rpcv2-hist
     cd /opt/rpcv2-hist
     docker compose up -d
   EOF
