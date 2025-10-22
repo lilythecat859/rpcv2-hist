@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: hist
-          image: ghcr.io/faithful-rpc/rpcv2-hist:0.1.0
+          image: ghcr.io/lilythecat859/rpcv2-hist:0.1.0
           ports:
             - containerPort: 8899
               name: jsonrpc
