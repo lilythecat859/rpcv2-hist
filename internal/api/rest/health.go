@@ -3,7 +3,7 @@ package rest
 import (
 	"net/http"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/health"
+	"github.com/lilythecat859/rpcv2-hist/internal/health"
 )
 
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
