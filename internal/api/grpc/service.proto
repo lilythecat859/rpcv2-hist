@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package rpcv2.hist.v1;
 
-option go_package = "github.com/faithful-rpc/rpcv2-hist/internal/api/grpc;grpc";
+option go_package = "github.com/lilythecat859/rpcv2-hist/internal/api/grpc;grpc";
 
 service Historical {
   rpc GetBlock(GetBlockRequest) returns (GetBlockResponse) {}
