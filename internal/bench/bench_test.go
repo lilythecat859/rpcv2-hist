@@ -10,9 +10,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage/clickhouse"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage/clickhouse"
 )
 
 func getStore(tb testing.TB) storage.HistoricalStore {
