@@ -18,7 +18,7 @@ import (
 	"github.com/lilythecat859/rpcv2-hist/internal/api/rest"
 	"github.com/lilythecat859/rpcv2-hist/internal/config"
 	"github.com/lilythecat859/rpcv2-hist/internal/fractal"
-	"github.com/lilythecat859/rpcv2-hist/inyernal/ingest"
+	"github.com/lilythecat859/rpcv2-hist/internal/ingest"
 	"github.com/lilythecat859/rpcv2-hist/internal/storage/clickhouse"
 	"github.com/lilythecat859/rpcv2-hist/internal/telemetry"
 	"github.com/oklog/run"
