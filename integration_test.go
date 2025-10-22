@@ -12,11 +12,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/api/jsonrpc"
-	"github.com/faithful-rpc/rpcv2-hist/internal/fractal"
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage/clickhouse"
-	"github.com/faithful-rpc/rpcv2-hist/internal/testutil"
+	"github.com/lilythecat859/rpcv2-hist/internal/api/jsonrpc"
+	"github.com/lilythecat859/rpcv2-hist/internal/fractal"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage/clickhouse"
+	"github.com/lilythecat859/rpcv2-hist/internal/testutil"
 )
 
 func TestEndToEnd(t *testing.T) {
