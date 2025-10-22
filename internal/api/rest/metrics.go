@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"github.com/faithful-rpc/rpcv2-hist/internal/telemetry"
+	"github.com/lilythecat859/rpcv2-hist/internal/telemetry"
 )
 
 var metrics = telemetry.NewMetrics()
