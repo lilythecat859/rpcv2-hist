@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage"
-	"github.com/faithful-rpc/rpcv2-hist/internal/storage/clickhouse"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage"
+	"github.com/lilythecat859/rpcv2-hist/internal/storage/clickhouse"
 )
 
 func NewBackend(ctx context.Context, kind storage.StoreKind, cfg any) (storage.HistoricalStore, error) {
