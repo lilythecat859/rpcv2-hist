@@ -12,18 +12,18 @@ echo "=> Building static binary"
 CGO_ENABLED=0 make build
 
 echo "=> Building OCI image"
-docker build -t "ghcr.io/faithful-rpc/rpcv2-hist:${VERSION}" .
+docker build -t "ghcr.io/lilythecat859/rpcv2-hist:${VERSION}" .
 
 echo "=> Pushing image"
-docker push "ghcr.io/faithful-rpc/rpcv2-hist:${VERSION}"
+docker push "ghcr.io/lilythecat859/rpcv2-hist:${VERSION}"
 
 echo "=> Generating SBOM"
-syft "ghcr.io/faithful-rpc/rpcv2-hist:${VERSION}" -o spdx-json > sbom.spdx.json
+syft "ghcr.io/lilythecat859/rpcv2-hist:${VERSION}" -o spdx-json > sbom.spdx.json
 
 echo "=> Signing"
-cosign sign --yes "ghcr.io/faithful-rpc/rpcv2-hist:${VERSION}"
+cosign sign --yes "ghcr.io/lilythecat859/rpcv2-hist:${VERSION}"
 
 echo "=> Attest SBOM"
-cosign attest --yes --predicate sbom.spdx.json --type spdx "ghcr.io/faithful-rpc/rpcv2-hist:${VERSION}"
+cosign attest --yes --predicate sbom.spdx.json --type spdx "ghcr.io/lilythecat859/rpcv2-hist:${VERSION}"
 
 echo "✅ Released ${VERSION}"
