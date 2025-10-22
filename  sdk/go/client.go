@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/faithful-rpc/rpcv2-hist/internal/model"
+	"github.com/lilythecat859/rpcv2-hist/internal/model"
 )
 
 type Client struct {
