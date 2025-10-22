@@ -1,7 +1,7 @@
 # AGPL-3.0
 replicaCount: 3
 image:
-  repository: ghcr.io/faithful-rpc/rpcv2-hist
+  repository: ghcr.io/lilythecat859/rpcv2-hist
   tag: "0.1.0"
   pullPolicy: IfNotPresent
 
