@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 
-	pb "github.com/faithful-rpc/rpcv2-hist/internal/api/grpc"
+	pb "github.com/lilythecat859/rpcv2-hist/internal/api/grpc"
 )
 
 type Client struct {
