@@ -1,3 +1,4 @@
+
 module github.com/lilythecat859/rpcv2-hist
 
 go 1.22
