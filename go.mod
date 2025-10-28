@@ -27,7 +27,7 @@ require (
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
 	// **THIS IS THE CORRECT LINE – no colon, just space between path and version**
-	go.opentelemetry.io/otel/semconv/v1.24.0
+	go.opentelemetry.io/otel/semconv v1.24.0
 
 	// ---------- Logging ----------
 	go.uber.org/zap v1.27.0
