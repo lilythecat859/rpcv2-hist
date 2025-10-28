@@ -26,6 +26,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.25.0
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.49.0
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
+ go.opentelemetry.io/otel/semconv/v1.24.0 v1.24.0
 	
 
 	// ---------- Logging ----------
